@@ -333,7 +333,7 @@
             }
           }
         ],
-        "name": "Matches HTTPQL",
+        "name": "yellow",
         "version": "0.1.0"
       },
       {
@@ -407,7 +407,7 @@
             }
           }
         ],
-        "name": "Matches HTTPQL 1",
+        "name": "red",
         "version": "0.1.0"
       },
       {
@@ -493,7 +493,7 @@
             }
           }
         ],
-        "name": "Matches HTTPQL 2",
+        "name": "orange",
         "version": "0.1.0"
       },
       {
@@ -565,21 +565,21 @@
         "id": 14,
         "inputs": [
           {
-            "alias": "query",
-            "value": {
-              "data": "req.raw.cont:\"X-PwnFox-Color: green\"",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_request.request",
               "kind": "ref"
             }
+          },
+          {
+            "alias": "query",
+            "value": {
+              "data": "req.raw.cont:\"X-PwnFox-Color: green\"",
+              "kind": "string"
+            }
           }
         ],
-        "name": "Matches HTTPQL 3",
+        "name": "green",
         "version": "0.1.0"
       },
       {
@@ -651,21 +651,21 @@
         "id": 18,
         "inputs": [
           {
-            "alias": "query",
-            "value": {
-              "data": "req.raw.cont:\"X-PwnFox-Color: magenta\"",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_request.request",
               "kind": "ref"
             }
+          },
+          {
+            "alias": "query",
+            "value": {
+              "data": "req.raw.cont:\"X-PwnFox-Color: magenta\"",
+              "kind": "string"
+            }
           }
         ],
-        "name": "Matches HTTPQL 4",
+        "name": "magenta",
         "version": "0.1.0"
       },
       {
@@ -751,7 +751,7 @@
             }
           }
         ],
-        "name": "Matches HTTPQL 5",
+        "name": "cyan",
         "version": "0.1.0"
       },
       {
@@ -823,21 +823,21 @@
         "id": 26,
         "inputs": [
           {
-            "alias": "query",
-            "value": {
-              "data": "req.raw.cont:\"X-PwnFox-Color: blue\"",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_request.request",
               "kind": "ref"
             }
+          },
+          {
+            "alias": "query",
+            "value": {
+              "data": "req.raw.cont:\"X-PwnFox-Color: blue\"",
+              "kind": "string"
+            }
           }
         ],
-        "name": "Matches HTTPQL 6",
+        "name": "blue",
         "version": "0.1.0"
       },
       {
