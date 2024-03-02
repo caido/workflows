@@ -1,5 +1,5 @@
 {
-  "description": "pwnfox yellow",
+  "description": "pwnfox",
   "edition": 2,
   "graph": {
     "edges": [
@@ -737,17 +737,17 @@
         "id": 22,
         "inputs": [
           {
-            "alias": "query",
-            "value": {
-              "data": "req.raw.cont:\"X-PwnFox-Color: cyan\"",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_request.request",
               "kind": "ref"
+            }
+          },
+          {
+            "alias": "query",
+            "value": {
+              "data": "req.raw.cont:\"X-PwnFox-Color: cyan\"",
+              "kind": "string"
             }
           }
         ],
@@ -766,7 +766,7 @@
           {
             "alias": "condition",
             "value": {
-              "data": "$matches_httpql_6.matches",
+              "data": "$matches_httpql_5.matches",
               "kind": "ref"
             }
           }
@@ -784,17 +784,17 @@
         "id": 24,
         "inputs": [
           {
-            "alias": "color",
-            "value": {
-              "data": "#31cd6f",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_request.request",
               "kind": "ref"
+            }
+          },
+          {
+            "alias": "color",
+            "value": {
+              "data": "#31cd6f",
+              "kind": "string"
             }
           }
         ],
@@ -870,17 +870,17 @@
         "id": 28,
         "inputs": [
           {
-            "alias": "color",
-            "value": {
-              "data": "#4094bf",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_request.request",
               "kind": "ref"
+            }
+          },
+          {
+            "alias": "color",
+            "value": {
+              "data": "#4094bf",
+              "kind": "string"
             }
           }
         ],
@@ -903,5 +903,5 @@
   },
   "id": "ccb99345-5d22-49f9-9e33-ed2bd4eea82b",
   "kind": "passive",
-  "name": "pwnfox yellow"
+  "name": "pwnfox"
 }
