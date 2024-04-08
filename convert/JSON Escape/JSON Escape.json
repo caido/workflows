@@ -1,5 +1,5 @@
 {
-  "description": "Workflow to JSON decode text",
+  "description": "Workflow to JSON escape text",
   "edition": 2,
   "graph": {
     "edges": [
@@ -42,7 +42,7 @@
         "definition_id": "caido/convert-end",
         "display": {
           "x": 0,
-          "y": 200
+          "y": 210
         },
         "id": 1,
         "inputs": [
@@ -62,7 +62,7 @@
         "definition_id": "caido/code-js",
         "display": {
           "x": 0,
-          "y": 100
+          "y": 110
         },
         "id": 2,
         "inputs": [
@@ -76,7 +76,7 @@
           {
             "alias": "code",
             "value": {
-              "data": "export function run(input, sdk) {\n  let parsed = sdk.asString(input);\r\n  if(!parsed.startsWith('\"')) {\r\n    parsed = '\"' + parsed;\r\n  }\r\n  if(!parsed.endsWith('\"')) {\r\n    parsed += '\"';\r\n  }\n  return JSON.parse(parsed);\n}\n",
+              "data": "export function run(input, sdk) {\n  let parsed = sdk.asString(input);\n  return JSON.stringify(parsed);\n}\n",
               "kind": "string"
             }
           }
@@ -86,7 +86,7 @@
       }
     ]
   },
-  "id": "e02db20b-d751-4d6a-8c22-36b3bc4e1740",
+  "id": "2158b5e7-6571-4c4c-b47d-fd7d4966d8e6",
   "kind": "convert",
-  "name": "JSON Decode"
+  "name": "JSON Escape"
 }
