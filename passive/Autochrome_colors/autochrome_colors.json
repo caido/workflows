@@ -1,5 +1,5 @@
 {
-  "description": "autochrome_coloring",
+  "description": "autochrome_colors",
   "edition": 2,
   "graph": {
     "edges": [
@@ -1029,5 +1029,5 @@
   },
   "id": "ccb99345-5d22-49f9-9e33-ed2bd4eea82b",
   "kind": "passive",
-  "name": "autochrome_coloring"
+  "name": "autochrome_colors"
 }
