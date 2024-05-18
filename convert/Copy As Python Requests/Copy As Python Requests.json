@@ -1,0 +1,92 @@
+{
+  "description": "Copies RAW HTTP requests as Python3 requests code.",
+  "edition": 2,
+  "graph": {
+    "edges": [
+      {
+        "source": {
+          "exec_alias": "exec",
+          "node_id": 0
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 2
+        }
+      },
+      {
+        "source": {
+          "exec_alias": "exec",
+          "node_id": 2
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 1
+        }
+      }
+    ],
+    "nodes": [
+      {
+        "alias": "convert_start",
+        "definition_id": "caido/convert-start",
+        "display": {
+          "x": 0,
+          "y": -80
+        },
+        "id": 0,
+        "inputs": [],
+        "name": "Convert Start",
+        "version": "0.1.0"
+      },
+      {
+        "alias": "convert_end",
+        "definition_id": "caido/convert-end",
+        "display": {
+          "x": 0,
+          "y": 100
+        },
+        "id": 1,
+        "inputs": [
+          {
+            "alias": "data",
+            "value": {
+              "data": "$javascript.data",
+              "kind": "ref"
+            }
+          }
+        ],
+        "name": "Convert End",
+        "version": "0.1.0"
+      },
+      {
+        "alias": "javascript",
+        "definition_id": "caido/code-js",
+        "display": {
+          "x": 0,
+          "y": 10
+        },
+        "id": 2,
+        "inputs": [
+          {
+            "alias": "data",
+            "value": {
+              "data": "$convert_start.data",
+              "kind": "ref"
+            }
+          },
+          {
+            "alias": "code",
+            "value": {
+              "data": "/**\n * @param {Bytesparsed} parsed\n * @param {SDK} sdk\n * @returns {MaybePromise<Data>}\n */\n export function run(parsed, sdk) {\n    parsed = sdk.asString(parsed);\n  \n    // Split the parsed string into lines\n    const lines = parsed.split('\\n');\n  \n    // Extract the request type and path\n    const [requestType, pathWithQuery] = lines[0].split(' ');\n    const [path, queryString] = pathWithQuery.split('?');\n  \n    // Extract the host from the Host header\n    const hostHeaderLine = lines.find(line => line.startsWith('Host:'));\n    if (!hostHeaderLine) {\n      sdk.console.error('Host header not found');\n      return '';\n    }\n    const host = hostHeaderLine.split(' ')[1].trim();\n  \n    // Extract all headers\n    const headers = {};\n    let contentStartIndex = -1;\n    for (let i = 1; i < lines.length; i++) {\n      const line = lines[i];\n      if (line === '') {\n        contentStartIndex = i + 1; // Headers end, content starts next line\n        break;\n      }\n      const [key, ...valueParts] = line.split(': ');\n      headers[key] = valueParts.join(': ').trim();\n    }\n  \n    // Extract the request data\n    const content = lines.slice(contentStartIndex).join('\\n').trim();\n  \n    // Merge host header and path to form the base URL\n    let completeURL = `https://${host}${path}`;\n  \n    // Append query parameters if present\n    if (queryString) {\n      completeURL += `?${queryString}`;\n    }\n  \n    // Form the Python code string\n    let pythonCode = `import requests\\n\\n`;\n    pythonCode += `url = \"${completeURL}\"\\n`;\n  \n    // Add headers to the Python code\n    let headersStr = '';\n    for (const [key, value] of Object.entries(headers)) {\n      headersStr += `    '${key}': '${value.replace(/'/g, \"\\\\'\")}',\\n`;\n    }\n    pythonCode += `headers = {\\n${headersStr}}\\n`;\n  \n    // Function to replace true/false with True/False\n    function replaceBooleanStrings(input) {\n      return input.replace(/\\btrue\\b/g, 'True').replace(/\\bfalse\\b/g, 'False');\n    }\n  \n    // Construct the request data\n    let payload = '';\n    let payloadKey = '';\n  \n    if (requestType !== 'GET') {\n      // Determine the data type and format accordingly\n      if (content.startsWith('{')) {\n        // If JSON data\n        try {\n          let requestData = JSON.parse(content);\n          payload = `${replaceBooleanStrings(JSON.stringify(requestData, null, 2))}\\n`;\n          payloadKey = 'json';\n        } catch (error) {\n          sdk.console.error('Error parsing JSON:', error);\n          return '';\n        }\n      } else if (content.includes('=')) {\n        // If form data (key=value pairs)\n        let formData = Object.fromEntries(new URLSearchParams(content));\n        payload = `${replaceBooleanStrings(JSON.stringify(formData, null, 2))}\\n`;\n        payloadKey = 'data';\n      } else {\n        // Other data types (plain text)\n        payload = `'''${replaceBooleanStrings(content.replace(/'/g, \"\\\\'\"))}'''\\n`;\n        payloadKey = 'data';\n      }\n    }\n  \n    // Construct the request\n    if (requestType === 'GET' || requestType === 'PUT' || requestType === 'DELETE') {\n      pythonCode += `response = requests.${requestType.toLowerCase()}(url, headers=headers)\\n`;\n    } else {\n      pythonCode += `${payloadKey} = ${payload}\\n\\n`;\n      pythonCode += `response = requests.${requestType.toLowerCase()}(url, headers=headers, ${payloadKey}=${payloadKey})\\n`;\n    }\n  \n    return pythonCode;\n  }\n  ",
+              "kind": "string"
+            }
+          }
+        ],
+        "name": "Javascript",
+        "version": "0.1.0"
+      }
+    ]
+  },
+  "id": "5b1a3cb4-d414-4405-952e-0154bcc41a43",
+  "kind": "convert",
+  "name": "Copy As Python Requests"
+}
